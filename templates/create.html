@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Create Event - Wichtel Loser{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>✨ Create Your Event</h2>
+    
+    {% if error %}
+    <div class="error-message">
+        {{ error }}
+    </div>
+    {% endif %}
+    
+    <form method="POST" action="/create">
+        <div class="form-group">
+            <label for="name">Event Name</label>
+            <input type="text" id="name" name="name" placeholder="e.g., Family Christmas 2024" required>
+        </div>
+        
+        <button type="submit" class="btn btn-primary btn-block">
+            🎄 Create Event
+        </button>
+    </form>
+</div>
+
+<div style="text-align: center; margin-top: 1rem;">
+    <a href="/" style="color: rgba(255,255,255,0.7); text-decoration: none;">← Back to Home</a>
+</div>
+{% endblock %}

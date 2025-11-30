@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}Join {{ event.name }} - Wichtel Loser{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>🎁 Join "{{ event.name }}"</h2>
+    
+    {% if error %}
+    <div class="error-message">
+        {{ error }}
+    </div>
+    {% endif %}
+    
+    {% if is_closed %}
+    <div class="error-message" style="background: rgba(255, 215, 0, 0.2); border-color: var(--gold); color: var(--gold);">
+        This event is closed for new participants. If you already joined, please find your name below.
+    </div>
+    
+    <p style="margin-bottom: 1rem;">Search for your name to see your assignment:</p>
+    
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="Type your name..." oninput="searchParticipants(this.value)">
+        <div class="search-results" id="search-results"></div>
+    </div>
+    
+    <form id="identity-form" method="POST" action="/event/{{ event.id }}/confirm-identity" style="display: none;">
+        <input type="hidden" name="participant_id" id="selected-participant-id">
+    </form>
+    
+    {% else %}
+    <p style="margin-bottom: 1rem;">Enter your name to join the Secret Santa event:</p>
+    
+    <form method="POST" action="/join/{{ invite_code }}">
+        <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" placeholder="e.g., Santa Claus" required>
+        </div>
+        
+        <button type="submit" class="btn btn-secondary btn-block">
+            🎅 Join Event
+        </button>
+    </form>
+    {% endif %}
+</div>
+
+<div class="card">
+    <h2>👥 Participants ({{ event.participants | length }})</h2>
+    {% if event.participants | length > 0 %}
+    <ul class="participant-list">
+        {% for id, participant in event.participants %}
+        <li class="participant-item">
+            <div class="participant-avatar">🎅</div>
+            <span>{{ participant.name }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p style="color: rgba(255,255,255,0.6); text-align: center; padding: 2rem;">
+        No participants yet. Be the first to join!
+    </p>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    let searchTimeout;
+    
+    function searchParticipants(query) {
+        clearTimeout(searchTimeout);
+        const resultsContainer = document.getElementById('search-results');
+        
+        if (query.length < 1) {
+            resultsContainer.classList.remove('active');
+            return;
+        }
+        
+        searchTimeout = setTimeout(async () => {
+            try {
+                const response = await fetch(`/event/{{ event.id }}/search?q=${encodeURIComponent(query)}`);
+                const results = await response.json();
+                
+                if (results.length > 0) {
+                    resultsContainer.innerHTML = results.map(r => `
+                        <div class="search-result-item" onclick="selectParticipant('${r.id}', '${r.name}')">
+                            <strong>${r.name}</strong>
+                        </div>
+                    `).join('');
+                    resultsContainer.classList.add('active');
+                } else {
+                    resultsContainer.innerHTML = '<div class="search-result-item">No matches found</div>';
+                    resultsContainer.classList.add('active');
+                }
+            } catch (err) {
+                console.error('Search error:', err);
+            }
+        }, 300);
+    }
+    
+    function selectParticipant(id, name) {
+        if (confirm(`Are you ${name}?`)) {
+            document.getElementById('selected-participant-id').value = id;
+            document.getElementById('identity-form').submit();
+        }
+    }
+</script>
+{% endblock %}
