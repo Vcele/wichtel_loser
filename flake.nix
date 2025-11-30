@@ -71,10 +71,10 @@
         nixosModules.default = { config, lib, pkgs, ... }:
           with lib;
           let
-            cfg = config.services.wichtel-loser;
+            cfg = config.services.wichtelloser;
           in
           {
-            options.services.wichtel-loser = {
+            options.services.wichtelloser = {
               enable = mkEnableOption "Wichtel Loser Secret Santa service";
               
               port = mkOption {
@@ -91,7 +91,7 @@
             };
             
             config = mkIf cfg.enable {
-              systemd.services.wichtel-loser = {
+              systemd.services.wichtelloser = {
                 description = "Wichtel Loser Secret Santa Service";
                 wantedBy = [ "multi-user.target" ];
                 after = [ "network.target" ];
