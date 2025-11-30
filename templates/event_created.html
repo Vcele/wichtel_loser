@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Event Created - Wichtel Loser{% endblock %}
+
+{% block content %}
+<div class="card" style="text-align: center;">
+    <div style="font-size: 4rem; margin-bottom: 1rem;">🎉</div>
+    <h2>Event Created!</h2>
+    <p style="font-size: 1.2rem; margin-bottom: 1rem;">
+        <strong>{{ event.name }}</strong>
+    </p>
+</div>
+
+<div class="card">
+    <h2>🔗 Invite Link</h2>
+    <p style="margin-bottom: 1rem;">Share this link with your participants:</p>
+    <div class="copy-box">
+        <code id="invite-link">{{ invite_url | safe }}</code>
+        <button class="copy-btn" onclick="copyInviteLink()">Copy</button>
+    </div>
+    <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">
+        Invite Code: <strong>{{ event.invite_code }}</strong>
+    </p>
+</div>
+
+<div class="card">
+    <h2>🔒 Organizer Dashboard</h2>
+    <p style="margin-bottom: 1rem;">Keep this link safe - it's how you'll manage your event:</p>
+    <div class="copy-box">
+        <code id="organizer-link">{{ organizer_url | safe }}</code>
+        <button class="copy-btn" onclick="copyOrganizerLink()">Copy</button>
+    </div>
+    <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">
+        ⚠️ Don't share this link - it contains your organizer token!
+    </p>
+    
+    <div style="margin-top: 1.5rem;">
+        <a href="{{ organizer_url }}" class="btn btn-gold btn-block">
+            📋 Go to Dashboard
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    function copyInviteLink() {
+        const link = window.location.origin + document.getElementById('invite-link').textContent;
+        copyToClipboard(link);
+    }
+    
+    function copyOrganizerLink() {
+        const link = window.location.origin + document.getElementById('organizer-link').textContent;
+        copyToClipboard(link);
+    }
+</script>
+{% endblock %}

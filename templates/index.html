@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Wichtel Loser - Secret Santa Made Easy{% endblock %}
+
+{% block content %}
+<div class="card" style="text-align: center;">
+    <h2>🎅 Welcome to Wichtel Loser!</h2>
+    <p style="margin-bottom: 2rem; font-size: 1.1rem; line-height: 1.6;">
+        Create your own Secret Santa event in seconds! 
+        Invite your friends and family, and let the magic of gift-giving begin.
+    </p>
+    
+    <div style="display: flex; flex-direction: column; gap: 1rem; max-width: 400px; margin: 0 auto;">
+        <a href="/create" class="btn btn-primary btn-block">
+            ✨ Create New Event
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <h2>🎄 How It Works</h2>
+    <div style="display: grid; gap: 1.5rem; margin-top: 1rem;">
+        <div style="display: flex; gap: 1rem; align-items: flex-start;">
+            <div style="background: var(--primary); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">1</div>
+            <div>
+                <h3 style="margin-bottom: 0.5rem;">Create an Event</h3>
+                <p style="color: rgba(255,255,255,0.7);">Name your Wichteln event and get a unique invite link to share.</p>
+            </div>
+        </div>
+        <div style="display: flex; gap: 1rem; align-items: flex-start;">
+            <div style="background: var(--secondary); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">2</div>
+            <div>
+                <h3 style="margin-bottom: 0.5rem;">Invite Participants</h3>
+                <p style="color: rgba(255,255,255,0.7);">Share the invite link with friends and family so they can join.</p>
+            </div>
+        </div>
+        <div style="display: flex; gap: 1rem; align-items: flex-start;">
+            <div style="background: var(--gold); color: var(--dark); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">3</div>
+            <div>
+                <h3 style="margin-bottom: 0.5rem;">Draw Names</h3>
+                <p style="color: rgba(255,255,255,0.7);">Close the event and let the magic happen - everyone gets secretly assigned!</p>
+            </div>
+        </div>
+        <div style="display: flex; gap: 1rem; align-items: flex-start;">
+            <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">🎁</div>
+            <div>
+                <h3 style="margin-bottom: 0.5rem;">Exchange Gifts</h3>
+                <p style="color: rgba(255,255,255,0.7);">Each participant can see who they're buying a gift for. Happy Wichteln!</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
